@@ -5,7 +5,7 @@ export default {
   data: new SlashCommandBuilder()
     .setName("bal")
     .setDescription("Check your balance in Mitcoin"),
-
+  hideOnHelpMenu: true,
   async execute(
     interaction: ChatInputCommandInteraction,
     db: DatabaseConnector,

@@ -1,4 +1,10 @@
-import { Events, Interaction, Message } from "discord.js";
+import {
+  Events,
+  Interaction,
+  Message,
+  SharedSlashCommandOptions,
+  SlashCommandBuilder,
+} from "discord.js";
 import { botPrefix, ownerUserId } from "../util/constants";
 import { DatabaseConnector } from "src/util/db";
 // import { onModalSubmit } from "../util/modal.js";
@@ -43,17 +49,25 @@ export default {
       },
       options: {
         getString: (name: string) => {
-          const index = command.data.options?.findIndex(
-            (option: any) => option.name === name
+          const ssco = command.data as SharedSlashCommandOptions;
+          const index = ssco.options.findIndex(
+            (option) => option.toJSON().name === name
           );
-          return args[index ?? 0];
+          return args[index ?? 0] || undefined;
         },
         getInteger: (name: string) => {
-          const index = command.data.options?.findIndex(
-            (option: any) => option.name === name
+          const ssco = command.data as SharedSlashCommandOptions;
+          const index = ssco.options.findIndex(
+            (option) => option.toJSON().name === name
           );
-          return parseInt(args[index ?? 0]);
+          return parseInt(args[index ?? 0]) || undefined;
         },
+        getUser: (name: string) => {
+          return message.mentions.users.first();
+        },
+      },
+      showModal: async (modal: any) => {
+        message.reply(`Please use the /${commandName} slash command instead`);
       },
     };
 

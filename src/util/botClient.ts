@@ -1,4 +1,11 @@
-import { ActivityType, Client, Embed, EmbedBuilder } from "discord.js";
+import {
+  ActivityType,
+  Client,
+  Embed,
+  EmbedBuilder,
+  Interaction,
+  ModalMessageModalSubmitInteraction,
+} from "discord.js";
 import { DatabaseConnector } from "./db";
 import { blockchain } from "./constants";
 
@@ -19,5 +26,29 @@ export async function sendToBlockchainChannel(
     await blockchainChannel.send({ embeds: [embed] });
   } else {
     throw new Error("Blockchain channel is not a text channel");
+  }
+}
+
+export async function modalHandler(
+  interaction: ModalMessageModalSubmitInteraction
+) {
+  switch (interaction.customId) {
+    case "complain-modal":
+      const complaint = interaction.fields.getTextInputValue("complaint-input");
+      await interaction.reply("Complaint submitted!");
+      const embed = new EmbedBuilder()
+        .setTitle("New complaint")
+        .setColor("#ff0000")
+        .setDescription(complaint)
+        .setAuthor({
+          name: interaction.user.username,
+          iconURL: interaction.user.displayAvatarURL(),
+        })
+        .setTimestamp();
+      await sendToBlockchainChannel(interaction.client, embed);
+      break;
+
+    default:
+      break;
   }
 }

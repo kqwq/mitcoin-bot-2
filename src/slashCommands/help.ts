@@ -5,7 +5,7 @@ import {
   SlashCommandStringOption,
 } from "discord.js";
 import { COLORS } from "../util/constants";
-import { DatabaseConnector } from "src/util/db";
+import { DatabaseConnector } from "../util/db";
 
 export default {
   data: new SlashCommandBuilder()
@@ -26,6 +26,7 @@ export default {
           }
         )
     ),
+  hideOnHelpMenu: true,
 
   async execute(
     interaction: ChatInputCommandInteraction,
@@ -46,7 +47,7 @@ export default {
     // Get data.name and data.description of every command
     const commandsToShow = showSlashCommands ? slashCommands : contextCommands;
     for (let cmd of commandsToShow) {
-      if (cmd.data.name === "help") continue;
+      if (cmd.hideOnHelpMenu) continue;
       embed.addFields({
         name: cmd.data.name,
         value: cmd.data.description ?? cmd.helpDescription,

@@ -1,7 +1,11 @@
-import { Events, Interaction } from "discord.js";
+import {
+  Events,
+  Interaction,
+  ModalMessageModalSubmitInteraction,
+} from "discord.js";
 import { ownerUserId } from "../util/constants";
-import { DatabaseConnector } from "src/util/db";
-// import { onModalSubmit } from "../util/modal.js";
+import { DatabaseConnector } from "../util/db";
+import { modalHandler } from "../util/botClient";
 
 export default {
   name: Events.InteractionCreate,
@@ -13,9 +17,9 @@ export default {
   ) {
     // Modal submit interaction
     if (interaction.isModalSubmit()) {
-      console.log("On modal submit lol");
-      return;
-      // return await onModalSubmit(interaction);
+      return await modalHandler(
+        interaction as ModalMessageModalSubmitInteraction
+      );
     }
 
     if (interaction.isMessageContextMenuCommand()) {

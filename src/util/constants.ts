@@ -13,13 +13,12 @@ export const blockchain = {
 export const mitcoin = {
   maxHistory: 1000, // 1000
   fluctuationTime: 5 * 60 * 1000, // 5 minutes
-  emoji: "<:mitcoin2:1138463536243281970>",
+  emoji: "<:mitcoinshiny:1138611290265370696>",
 };
 
 export const COLORS: Record<string, ColorResolvable> = {
-  primary: "#3935ff",
-  graph: "#34b4eb",
-  graphBg: "#00000000",
+  primary: "#FF9900",
+  graph: "#FF9900",
 };
 
 export const mitcoinSpreadsheet = {

@@ -3,18 +3,18 @@ import { DatabaseConnector } from "../util/db";
 
 export default {
   data: new SlashCommandBuilder()
-    .setName("bal")
+    .setName("buy")
     .setDescription("Invest in a certain amount of Mitcoin"),
-
+  hideOnHelpMenu: true,
   async execute(
     interaction: ChatInputCommandInteraction,
     db: DatabaseConnector,
     slashCommands: any[],
     contextCommands: any[]
   ) {
-    // Call /balance
+    // Call /invest
     const balanceCommand = slashCommands.find(
-      (command) => command.data.name === "buy"
+      (command) => command.data.name === "invest"
     );
     balanceCommand.execute(interaction, db, slashCommands, contextCommands);
   },

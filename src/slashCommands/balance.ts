@@ -9,14 +9,23 @@ import { DatabaseConnector } from "../util/db";
 export default {
   data: new SlashCommandBuilder()
     .setName("balance")
-    .setDescription("Check your balance in Mitcoin"),
+    .setDescription("Check your balance in Mitcoin")
+
+    // User
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("The user to check the balance of")
+        .setRequired(false)
+    ),
 
   async execute(
     interaction: ChatInputCommandInteraction,
     db: DatabaseConnector
   ) {
     // Get user
-    const dbUser = await db.getUserAndCreateNewIfNeeded(interaction.user);
+    const discordUser = interaction.options.getUser("user") ?? interaction.user;
+    const dbUser = await db.getUserAndCreateNewIfNeeded(discordUser);
 
     // Vars
     const price = db.getMitcoinPrice();
@@ -25,8 +34,8 @@ export default {
     const embed = new EmbedBuilder()
       .setColor(COLORS.primary)
       .setAuthor({
-        name: interaction.user.username,
-        iconURL: interaction.user.displayAvatarURL(),
+        name: discordUser.username,
+        iconURL: discordUser.displayAvatarURL(),
       })
       .addFields(
         {

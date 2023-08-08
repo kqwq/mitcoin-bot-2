@@ -38,6 +38,8 @@ export default {
     const person = interaction.options.getUser("person");
     if (!person) {
       return await interaction.reply("you must specify a person to give to");
+    } else if (person.id === interaction.user.id) {
+      return await interaction.reply("you can't pay yourself!");
     }
     const amountStr = interaction.options.getString("amount") ?? "0";
     let amount;

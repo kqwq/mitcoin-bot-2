@@ -8,7 +8,7 @@ import { DatabaseConnector } from "./db";
  */
 export async function loadSlashCommands() {
   const slashCommands = [];
-  const commandsPath = path.join(process.cwd(), "src", "slashCommands");
+  const commandsPath = path.join(__dirname, "..", "slashCommands");
   // Return list of files ending with .ts in commandsPath
   const commandFiles = fs.readdirSync(commandsPath).filter((file) => {
     return file.endsWith(".ts");
@@ -26,7 +26,7 @@ export async function loadSlashCommands() {
  */
 export async function loadContextCommands() {
   const contextCommands = [];
-  const commandsPath = path.join(process.cwd(), "src", "contextCommands");
+  const commandsPath = path.join(__dirname, "..", "contextCommands");
   // Return list of files ending with .ts in commandsPath
   const commandFiles = fs
     .readdirSync(commandsPath)
