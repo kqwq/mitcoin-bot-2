@@ -1,4 +1,4 @@
-# Mitcoin Bot 2.0
+# Mitcoin Bot 2
 
 Exactly like the original Mitcoin Bot but with a new taxation/donation system.
 

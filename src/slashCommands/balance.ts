@@ -16,7 +16,7 @@ export default {
     db: DatabaseConnector
   ) {
     // Get user
-    const dbUser = await db.getUserAndCreateNewIfNeeded(interaction);
+    const dbUser = await db.getUserAndCreateNewIfNeeded(interaction.user);
 
     // Vars
     const price = db.getMitcoinPrice();

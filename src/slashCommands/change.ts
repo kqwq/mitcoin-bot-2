@@ -60,6 +60,9 @@ export default {
         `There was an error getting the price history. Tick ${seekTick} not found.`
       );
     }
+    const displayVal = `${Math.round(
+      (price / priceRecord.price) * 100
+    )}%\n${priceRecord.price.toFixed(3)} -> ${price.toFixed(3)}`;
 
     // Embed
     const embed = new EmbedBuilder()
@@ -67,7 +70,7 @@ export default {
       .setTitle(`Mitcoin change over the past ${timeStr}`)
       .addFields({
         name: `${ticks} fluctuation${ticks > 1 ? "s" : ""}`,
-        value: `${Math.round((price / priceRecord.price) * 100)}%`,
+        value: displayVal,
       });
 
     // Reply

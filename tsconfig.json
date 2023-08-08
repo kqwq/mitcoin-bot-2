@@ -21,7 +21,8 @@
         "baseUrl": "./"
     },
     "files": [
-        "src/Bot.ts"
+        "src/scripts/startBot.ts",
+        "src/scripts/registerCommands.ts",
     ],
     "include": [
         "./**/*.ts"
@@ -30,4 +31,7 @@
         "node_modules",
         "dist"
     ],
+    "ts-node": {
+      "swc": true
+    }
 }

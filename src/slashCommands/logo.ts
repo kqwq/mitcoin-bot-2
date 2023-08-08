@@ -6,6 +6,8 @@ export default {
     .setDescription("See the Mitcoin logo"),
 
   async execute(interaction: ChatInputCommandInteraction) {
-    await interaction.reply("WIP");
+    await interaction.reply(
+      "Mitcoin Bot 2 doesn't have its own logo :(  Please help..."
+    );
   },
 };

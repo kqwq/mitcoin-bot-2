@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { setBotStatus } from "./botStatus";
+import { setBotStatus } from "./botClient";
 import { DatabaseConnector } from "./db";
 import { mitcoin } from "./constants";
 

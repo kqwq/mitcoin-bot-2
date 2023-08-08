@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, User } from "discord.js";
 import { mitcoin } from "./constants";
 import { getGoogleSheet, overrideGoogleSheet } from "./googleSheets";
 import { MitcoinUser } from "./types";
@@ -42,8 +42,8 @@ export class DatabaseConnector {
       this.users.push({
         id: row[0],
         username: row[1],
-        money: parseInt(row[2]),
-        mitcoin: parseInt(row[3]),
+        money: parseFloat(row[2]),
+        mitcoin: parseFloat(row[3]),
         // gap in spreadsheet
         dateJoined: new Date(row[5]),
         lastCommand: row[6] ? new Date(row[6]) : null,
@@ -99,11 +99,16 @@ export class DatabaseConnector {
     return { ...user };
   }
 
-  async getUserAndCreateNewIfNeeded(
-    interaction: ChatInputCommandInteraction
-  ): Promise<MitcoinUser> {
-    const id = interaction.user.id;
-    const username = interaction.user.username;
+  /**
+   * Returns a array of all users as-is (not copies)
+   */
+  getAllUsers() {
+    return this.users;
+  }
+
+  async getUserAndCreateNewIfNeeded(discordUser: User): Promise<MitcoinUser> {
+    const id = discordUser.id;
+    const username = discordUser.username;
     if (!this.existsUser(id)) {
       await this.addNewUser(id, username);
     }
@@ -128,7 +133,7 @@ export class DatabaseConnector {
         user.lastDonated?.toISOString() ?? "",
       ],
     ];
-    await overrideGoogleSheet("Person", range, data);
+    await overrideGoogleSheet("People", range, data);
   }
 
   async addNewUser(id: string, username: string) {
@@ -160,6 +165,18 @@ export class DatabaseConnector {
   // Mitcoin demand
   getMitcoinDemand() {
     return this.mitcoinDemand;
+  }
+
+  // Mitcoin increment demand
+  increaseMitcoinDemand(amount: number) {
+    if (amount < 0) throw new Error("amount must be positive");
+    this.mitcoinDemand += amount;
+  }
+
+  // Mitcoin decrement demand
+  decreaseMitcoinDemand(amount: number) {
+    if (amount < 0) throw new Error("amount must be positive");
+    this.mitcoinDemand -= amount;
   }
 
   // Mitcoin tick
