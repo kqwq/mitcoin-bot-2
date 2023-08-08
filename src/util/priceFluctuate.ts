@@ -1,6 +1,7 @@
 import { Client } from "discord.js";
 import { setBotStatus } from "./botStatus";
 import { DatabaseConnector } from "./db";
+import { mitcoin } from "./constants";
 
 export async function updateMitcoinPrice(
   client: Client,
@@ -22,6 +23,7 @@ export async function updateMitcoinPrice(
 
   // Update bot status
   setBotStatus(client, db);
+  // console.log(`Updated Mitcoin price to ${price} and demand to ${demand}`);
 
   // bot.guilds.cache.get("424284908991676418").members.forEach(m => {
   //   // Richest of the Rich
@@ -36,4 +38,20 @@ export async function updateMitcoinPrice(
   //   if (m.roles.cache.has("530794639301673000") && mitcoinInfo.balances[m.user.id] && mitcoinInfo.balances[m.user.id].balance < 1000000) m.roles.remove("530794639301673000");
   //   else if (!m.roles.cache.has("530794639301673000") && mitcoinInfo.balances[m.user.id] && mitcoinInfo.balances[m.user.id].balance >= 1000000) m.roles.add("530794639301673000");
   // })
+}
+
+/**
+ * This also immediately updates the price, then starts the interval
+ * @param client
+ * @param db
+ */
+export function startPriceFluctuation(client: Client, db: DatabaseConnector) {
+  if (db.mitcoinPriceIsCurrentlyUpdating) {
+    throw new Error("Price fluctuation is already running!");
+  }
+  db.mitcoinPriceIsCurrentlyUpdating = true;
+  updateMitcoinPrice(client, db);
+  setInterval(() => {
+    updateMitcoinPrice(client, db);
+  }, mitcoin.fluctuationTime);
 }

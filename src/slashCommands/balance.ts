@@ -3,8 +3,8 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
-import { COLORS, mitcoin } from "src/util/constants";
-import { DatabaseConnector } from "src/util/db";
+import { COLORS, mitcoin } from "../util/constants";
+import { DatabaseConnector } from "../util/db";
 
 export default {
   data: new SlashCommandBuilder()
@@ -31,7 +31,7 @@ export default {
       .addFields(
         {
           name: "Mitcoin",
-          value: `dbUser.mitcoin.toFixed(3) ${mitcoin.emoji}`,
+          value: `${dbUser.mitcoin.toFixed(3)} ${mitcoin.emoji}`,
           inline: true,
         },
         {

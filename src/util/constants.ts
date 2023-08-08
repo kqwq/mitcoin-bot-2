@@ -11,8 +11,9 @@ export const blockchain = {
   channelId: "1138462464497954836",
 };
 export const mitcoin = {
-  maxHistory: 1000,
-  fluctuationTime: 5 * 60 * 1000, // 5 minutes
+  maxHistory: 25, // 1000
+  fluctuationTime: 1000 * 5, // 5 seconds
+  // fluctuationTime: 5 * 60 * 1000, // 5 minutes
   emoji: "<:mitcoin2:1138463536243281970>",
 };
 

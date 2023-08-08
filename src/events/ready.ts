@@ -1,6 +1,6 @@
 import { Client, Events } from "discord.js";
-import { setBotStatus } from "src/util/botStatus";
-import { DatabaseConnector } from "src/util/db";
+import { setBotStatus } from "../util/botStatus";
+import { DatabaseConnector } from "../util/db";
 
 export default {
   name: Events.ClientReady,

@@ -20,6 +20,7 @@ export class DatabaseConnector {
   mitcoinDemand: number;
   mitcoinPriceHistory: MitcoinPriceHistory[]; // circular buffer
   mitcoinPriceLastReadIndex: number;
+  mitcoinPriceIsCurrentlyUpdating: boolean;
   constructor() {
     this.users = [];
     this.numberOfUserRows = 0;
@@ -28,6 +29,7 @@ export class DatabaseConnector {
     this.mitcoinDemand = 0;
     this.mitcoinPriceHistory = [];
     this.mitcoinPriceLastReadIndex = 0;
+    this.mitcoinPriceIsCurrentlyUpdating = false;
   }
 
   async loadDataFromSheets() {
@@ -147,7 +149,7 @@ export class DatabaseConnector {
     const data = [
       [id, username, "1", "0", "", new Date().toISOString(), "", "", ""],
     ];
-    await overrideGoogleSheet("Person", range, data);
+    await overrideGoogleSheet("People", range, data);
   }
 
   // Mitcion price
@@ -158,6 +160,11 @@ export class DatabaseConnector {
   // Mitcoin demand
   getMitcoinDemand() {
     return this.mitcoinDemand;
+  }
+
+  // Mitcoin tick
+  getMitcoinTick() {
+    return this.mitcoinTick;
   }
 
   // Mitcoin price history
@@ -178,16 +185,21 @@ export class DatabaseConnector {
       demand,
     });
     // Update db
-    const insertRow = this.mitcoinPriceLastReadIndex + 2;
-    const range = `A${insertRow}:C${insertRow}`;
+    const insertRow = this.mitcoinPriceLastReadIndex + 2 + 1; // plus 1 because we want to insert after the last read index
+    const range = `A${insertRow}:D${insertRow}`;
     const data = [
-      [price.toString(), this.mitcoinTick.toString(), new Date().toISOString()],
+      [
+        price.toString(),
+        this.mitcoinTick.toString(),
+        new Date().toISOString(),
+        demand.toString(),
+      ],
     ];
     await overrideGoogleSheet("Mitcoin Price", range, data);
     // Update last read index
     this.mitcoinPriceLastReadIndex++;
     if (this.mitcoinPriceLastReadIndex >= mitcoin.maxHistory) {
-      this.mitcoinPriceLastReadIndex = 0;
+      this.mitcoinPriceLastReadIndex = -1;
     }
   }
 }
