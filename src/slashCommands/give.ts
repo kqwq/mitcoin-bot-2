@@ -39,20 +39,28 @@ export default {
     if (!person) {
       return await interaction.reply("you must specify a person to give to");
     }
-    const amountStr = interaction.options.getString("amount");
+    const amountStr = interaction.options.getString("amount") ?? "0";
     let amount;
-    if (!amountStr) {
-      return await interaction.reply("you must specify an amount to give");
-    } else if (amountStr === "all") {
+    if (amountStr === "all") {
       amount = dbGiver.mitcoin;
     } else {
       amount = parseFloat(amountStr);
+      if (isNaN(amount) || amount <= 0) {
+        return await interaction.reply(
+          "you must specify a valid amount to give"
+        );
+      }
     }
     const price = db.getMitcoinPrice();
 
     // If user doesn't have any Mitcoin
     if (dbGiver.mitcoin <= 0) {
       return await interaction.reply("you don't have any Mitcoin!");
+    }
+
+    // If user doesn't have enough Mitcoin
+    if (dbGiver.mitcoin < amount) {
+      return await interaction.reply("you don't have enough Mitcoin to pay!");
     }
 
     // Create and reference receiver user

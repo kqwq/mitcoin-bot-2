@@ -31,15 +31,17 @@ export default {
     }
 
     // Validate amount
-    const amountStr = interaction.options.getString("amount") ?? 0;
+    const amountStr = interaction.options.getString("amount") ?? "0";
     let amount;
-    if (!amountStr || isNaN(parseFloat(amountStr))) {
-      return await interaction.reply("Specify a valid amount to invest");
-    }
     if (amountStr === "all") {
       amount = dbUser.mitcoin;
     } else {
       amount = parseFloat(amountStr);
+      if (isNaN(amount) || amount <= 0) {
+        return await interaction.reply(
+          "you must specify a valid amount to sell!"
+        );
+      }
     }
 
     // If user doesn't have enough Mitcoin
@@ -63,7 +65,7 @@ export default {
     // Send the confirmation message
     const output = `<@${interaction.user.id}> has sold ${amount.toFixed(3)} ${
       mitcoin.emoji
-    } after inveand received ${dollarEquivalent.toFixed(3)} :dollar: `;
+    } and received ${dollarEquivalent.toFixed(3)} :dollar: `;
     await interaction.reply(output);
 
     // Send embed to blockchain

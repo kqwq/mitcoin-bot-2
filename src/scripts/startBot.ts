@@ -1,5 +1,5 @@
 // Imports
-import { Client } from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import * as dotenv from "dotenv";
 import {
   handleClientEvents,
@@ -14,7 +14,11 @@ dotenv.config();
 
 // Create client
 const client = new Client({
-  intents: [],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
 async function main() {

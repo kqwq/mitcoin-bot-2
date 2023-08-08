@@ -31,15 +31,17 @@ export default {
     }
 
     // Validate amount
-    const amountStr = interaction.options.getString("amount") ?? 0;
+    const amountStr = interaction.options.getString("amount") ?? "0";
     let amount;
-    if (!amountStr || isNaN(parseFloat(amountStr))) {
-      return await interaction.reply("Specify a valid amount to invest");
-    }
     if (amountStr === "all") {
       amount = dbUser.money;
     } else {
       amount = parseFloat(amountStr);
+      if (isNaN(amount) || amount <= 0) {
+        return await interaction.reply(
+          "you must specify a valid amount to invest!"
+        );
+      }
     }
 
     // If user doesn't have enough money
@@ -74,14 +76,18 @@ export default {
     await db.updateUser(dbUser);
 
     // Send the confirmation message
-    let output = `<@${interaction.user.id}> has earned ${mitcoinEquivalent} ${mitcoin.emoji} after investing ${amount} :dollar: `;
+    let output = `<@${
+      interaction.user.id
+    }> has earned ${mitcoinEquivalent.toFixed(3)} ${
+      mitcoin.emoji
+    } after investing ${amount.toFixed(3)} :dollar: `;
     if (mitcoinEquivalent >= 100) {
       output += "(5% tax) ";
     }
     if (dbUser.money === 0) {
       output += "and cannot invest any more :dollar:";
     } else {
-      output += `and has ${dbUser.money} :dollar: left to invest`;
+      output += `and has ${dbUser.money.toFixed(3)} :dollar: left to invest`;
     }
     await interaction.reply(output.trim());
 

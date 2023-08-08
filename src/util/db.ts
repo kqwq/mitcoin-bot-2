@@ -201,6 +201,9 @@ export class DatabaseConnector {
       date: new Date(),
       demand,
     });
+    if (this.mitcoinPriceHistory.length > mitcoin.maxHistory) {
+      this.mitcoinPriceHistory.shift();
+    }
     // Update db
     const insertRow = this.mitcoinPriceLastReadIndex + 2 + 1; // plus 1 because we want to insert after the last read index
     const range = `A${insertRow}:D${insertRow}`;

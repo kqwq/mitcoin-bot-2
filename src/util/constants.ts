@@ -18,6 +18,8 @@ export const mitcoin = {
 
 export const COLORS: Record<string, ColorResolvable> = {
   primary: "#3935ff",
+  graph: "#34b4eb",
+  graphBg: "#00000000",
 };
 
 export const mitcoinSpreadsheet = {
