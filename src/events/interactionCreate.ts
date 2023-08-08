@@ -17,6 +17,7 @@ export default {
     }
 
     if (interaction.isMessageContextMenuCommand()) {
+      // console.log(interaction.commandName);
       const command = contextCommands.find(
         (cmd) => cmd.data.name === interaction.commandName
       );
@@ -57,7 +58,7 @@ export default {
         );
 
       try {
-        await command.execute(interaction, slashCommands);
+        await command.execute(interaction, slashCommands, contextCommands);
       } catch (error) {
         console.error(`Error executing ${interaction.commandName}`);
         console.error(error);

@@ -10,9 +10,9 @@ import {
 
 export default {
   data: new ContextMenuCommandBuilder()
-    .setName("Tax Citizen")
+    .setName("Pay Taxes")
     .setType(ApplicationCommandType.Message),
-
+  helpDescription: "Make this user pay their fair share of taxes",
   async execute(interaction: MessageContextMenuCommandInteraction) {
     // Get user from targetMessage
     const targetMessage = interaction.targetMessage;
