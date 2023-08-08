@@ -1,16 +1,12 @@
-import { ActivityType, Client, Events } from "discord.js";
+import { Client, Events } from "discord.js";
+import { setBotStatus } from "src/util/botStatus";
+import { DatabaseConnector } from "src/util/db";
 
 export default {
   name: Events.ClientReady,
   once: true,
-  execute(client: Client) {
+  execute(client: Client, db: DatabaseConnector) {
     console.log(`Ready! Logged in as ${client.user?.tag}`);
-
-    setTimeout(() => {
-      client.user &&
-        client.user.setActivity(`Mitcoin = $x`, {
-          type: ActivityType.Watching,
-        });
-    }, 1000 * 5);
+    setBotStatus(client, db);
   },
 };
