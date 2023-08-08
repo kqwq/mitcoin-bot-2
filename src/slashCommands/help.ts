@@ -6,7 +6,9 @@ import {
 import { COLORS } from "../util/constants";
 
 export default {
-  data: new SlashCommandBuilder().setName("help").setDescription("hi"),
+  data: new SlashCommandBuilder()
+    .setName("help")
+    .setDescription("Show the list of commands as an embed"),
 
   async execute(
     interaction: ChatInputCommandInteraction,
@@ -20,10 +22,11 @@ export default {
 
     // Get data.name and data.description of every slash command
     for (let cmd of slashCommands) {
+      if (cmd.data.name === "help") continue;
       embed.addFields({ name: cmd.data.name, value: cmd.data.description });
     }
 
     // Send embed
-    interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] });
   },
 };

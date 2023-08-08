@@ -8,7 +8,7 @@ export default {
 
     setTimeout(() => {
       client.user &&
-        client.user.setActivity(`Investors`, {
+        client.user.setActivity(`Mitcoin = $x`, {
           type: ActivityType.Watching,
         });
     }, 1000 * 5);
