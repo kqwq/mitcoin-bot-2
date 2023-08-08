@@ -1,11 +1,13 @@
 import { Events, Interaction } from "discord.js";
 import { ownerUserId } from "../util/constants";
+import { DatabaseConnector } from "src/util/db";
 // import { onModalSubmit } from "../util/modal.js";
 
 export default {
   name: Events.InteractionCreate,
   async execute(
     interaction: Interaction,
+    db: DatabaseConnector,
     slashCommands: any[],
     contextCommands: any[]
   ) {
@@ -58,7 +60,7 @@ export default {
         );
 
       try {
-        await command.execute(interaction, slashCommands, contextCommands);
+        await command.execute(interaction, db, slashCommands, contextCommands);
       } catch (error) {
         console.error(`Error executing ${interaction.commandName}`);
         console.error(error);

@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
-import { Client, ClientApplication, SlashCommandBuilder } from "discord.js";
+import { Client } from "discord.js";
+import { DatabaseConnector } from "./db";
 
 /**
  * Loads slash commands
@@ -43,6 +44,7 @@ export async function loadContextCommands() {
  */
 export async function handleClientEvents(
   client: Client,
+  db: DatabaseConnector,
   slashCommands: any[],
   contextCommands: any[]
 ) {
@@ -55,11 +57,11 @@ export async function handleClientEvents(
     const event = await import(filePath).then((event) => event.default);
     if (event.once) {
       client.once(event.name, (...args) =>
-        event.execute(...args, slashCommands, contextCommands)
+        event.execute(...args, db, slashCommands, contextCommands)
       );
     } else {
       client.on(event.name, (...args) =>
-        event.execute(...args, slashCommands, contextCommands)
+        event.execute(...args, db, slashCommands, contextCommands)
       );
     }
   }

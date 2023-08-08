@@ -5,7 +5,8 @@ import {
   handleClientEvents,
   loadContextCommands,
   loadSlashCommands,
-} from "../util/startup";
+} from "../util/init";
+import { loadDatabase } from "src/util/db";
 
 // Config
 dotenv.config();
@@ -17,9 +18,10 @@ const client = new Client({
 
 async function main() {
   // Load commands and event handlers
+  const db = await loadDatabase();
   const slashCommands = await loadSlashCommands();
   const contextCommands = await loadContextCommands();
-  await handleClientEvents(client, slashCommands, contextCommands);
+  await handleClientEvents(client, db, slashCommands, contextCommands);
   console.log(
     `Loaded ${slashCommands.length} slash commands and ${contextCommands.length} context commands`
   );

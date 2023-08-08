@@ -5,6 +5,7 @@ import {
   SlashCommandStringOption,
 } from "discord.js";
 import { COLORS } from "../util/constants";
+import { DatabaseConnector } from "src/util/db";
 
 export default {
   data: new SlashCommandBuilder()
@@ -28,6 +29,7 @@ export default {
 
   async execute(
     interaction: ChatInputCommandInteraction,
+    db: DatabaseConnector,
     slashCommands: any[],
     contextCommands: any[]
   ) {
