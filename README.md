@@ -15,7 +15,7 @@ This is based on the [Mitcoin bot](https://github.com/PotatOS03/Mitcoin/tree/mas
 `leaderboard/lb <?"Mitcoin"|"money"|"all">` - View the current Mitcoin leaderboard\
 `logo` - See the Mitcoin logo\
 `sell <amount>` - Sell Mitcoin in return for money\
-`value <?amount>` - See Mitcoin's current value\
+`value <?amount>` - See Mitcoin's current value
 
 # Build Instructions
 
