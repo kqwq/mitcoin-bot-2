@@ -38,7 +38,7 @@ export default {
       !interaction.options.getString("type") ||
       interaction.options.getString("type") === "slash";
     const desc = showSlashCommands
-      ? "List of slash commands.\nBased on and inspired by Mitcoin Bot by @area5 and @potatos03."
+      ? "List of commands"
       : "List of context commands.\nRight click or long press a message and select the context command under Apps.";
     const embed = new EmbedBuilder()
       .setDescription(desc)
