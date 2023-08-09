@@ -78,9 +78,9 @@ export default {
       if (!user) break;
       const name = `${placeNames[i]} Place`;
       const number = {
-        mitcoin: user.mitcoin,
-        money: user.money,
-        all: user.mitcoin * price + user.money,
+        mitcoin: user.mitcoin.toFixed(2),
+        money: user.money.toFixed(2),
+        all: (user.mitcoin * price + user.money).toFixed(2),
       };
       const value = `${user.username} | ${number[currency]} ${displayCurrency[currency]}`;
       embed.addFields({ name, value });

@@ -4,7 +4,15 @@ import { DatabaseConnector } from "../util/db";
 export default {
   data: new SlashCommandBuilder()
     .setName("bal")
-    .setDescription("Check your balance in Mitcoin"),
+    .setDescription("Check your balance in Mitcoin")
+
+    // User
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("The user to check the balance of")
+        .setRequired(false)
+    ),
   hideOnHelpMenu: true,
   async execute(
     interaction: ChatInputCommandInteraction,

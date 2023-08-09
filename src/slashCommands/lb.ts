@@ -4,7 +4,27 @@ import { DatabaseConnector } from "../util/db";
 export default {
   data: new SlashCommandBuilder()
     .setName("lb")
-    .setDescription("View the current Mitcoin leaderboard"),
+    .setDescription("View the current Mitcoin leaderboard")
+    .addStringOption((option) =>
+      option
+        .setName("currency")
+        .setDescription("Mitcoin (default), money, or all")
+        .setRequired(false)
+        .addChoices(
+          {
+            name: "Mitcoin",
+            value: "mitcoin",
+          },
+          {
+            name: "Money",
+            value: "money",
+          },
+          {
+            name: "All",
+            value: "all",
+          }
+        )
+    ),
   hideOnHelpMenu: true,
   async execute(
     interaction: ChatInputCommandInteraction,
