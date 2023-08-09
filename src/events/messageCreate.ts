@@ -32,10 +32,7 @@ export default {
     const command = slashCommands.find((cmd) => cmd.data.name === commandName);
 
     // If the command doesn't exist, return
-    if (!command)
-      return console.error(
-        `No message command matching ${botPrefix}${commandName} found`
-      );
+    if (!command) return;
 
     // Create interaction adapter for traditional commands
     const interaction = {

@@ -10,6 +10,7 @@ export default {
     .setName("logo")
     .setDescription("See the Mitcoin logo"),
 
+  hideOnHelpMenu: true,
   async execute(interaction: ChatInputCommandInteraction) {
     // Rich embed to send the logo in
     const embed = new EmbedBuilder()

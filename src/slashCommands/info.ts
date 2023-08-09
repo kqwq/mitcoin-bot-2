@@ -20,6 +20,7 @@ export default {
     .setName("info")
     .setDescription("Info about the bot"),
 
+  hideOnHelpMenu: true,
   async execute(interaction: ChatInputCommandInteraction) {
     // Create embed
 
