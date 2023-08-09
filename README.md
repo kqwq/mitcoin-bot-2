@@ -48,7 +48,7 @@ Price,Tick #,Date,Demand
 12.  Copy the application ID and add `CLIENT_ID = ` to the .env file
 
 ## Discord Server Setup
-13. Create a new Discord server and invite the bot to it using the  `oauth2Link` link in /src/util/constants.ts, replacing the `CLIENT_ID` with your bot's application ID
+13. Create a new Discord server and invite the bot to it using the  `oauth2Link` link in /src/util/constants.ts, replacing the `${CLIENT_ID}` with your bot's application ID
 14. Create a channel called `#blockchain`, copy that channel's ID, and update constants.ts appropriately
 15. While you're in `constants.ts`, update any other constants you want to change
 16. Add the following lines to your .env:
@@ -67,4 +67,5 @@ CLIENT_ID = Application ID of the bot
 ORIGINAL_SERVER_INVITE = Discord invite code to the original "Mitcoin" server
 NEW_SERVER_INVITE = Dsicord invite code to Kyle's Web Experiments
 ```
-18. Run `yarn install && yarn reg && yarn build`
+18. Run `yarn install && yarn reg && yarn start` to register slash commands (both globally and in `developmentGuildId`) and start the bot.\
+For any subsequent runs, just run `yarn start`
