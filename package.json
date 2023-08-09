@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/scripts/startBot.ts",
+    "prod": "ts-node --transpile-only src/scripts/startBot.ts",
     "reg": "ts-node src/scripts/registerCommands.ts",
     "register": "ts-node src/scripts/registerCommands.ts"
   },
