@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import { mitcoinSpreadsheet } from "./constants";
+import { googleSpreadsheetId } from "./constants";
 
 export type ValueRenderType =
   | "FORMATTED_VALUE"
@@ -26,7 +26,7 @@ export async function getGoogleSheet(
     const jwt = loginWithServiceAccount();
     const sheets = google.sheets({ version: "v4", auth: jwt });
     const response = await sheets.spreadsheets.values.get({
-      spreadsheetId: mitcoinSpreadsheet.spreadsheetId,
+      spreadsheetId: googleSpreadsheetId,
       range: sheetName, // sheet name
       valueRenderOption,
     });
@@ -48,7 +48,7 @@ export async function overrideGoogleSheet(
     const jwt = loginWithServiceAccount();
     const sheets = google.sheets({ version: "v4", auth: jwt });
     const response = await sheets.spreadsheets.values.update({
-      spreadsheetId: mitcoinSpreadsheet.spreadsheetId,
+      spreadsheetId: googleSpreadsheetId,
       range: "'" + sheetName + "'!" + range, // sheet name
       valueInputOption,
       requestBody: {

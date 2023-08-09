@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const oauth2Link = `https://discord.com/api/oauth2/authorize?client_id=${process.env.CLIENT_ID}&permissions=314432&scope=bot%20applications.commands`;
+export const githubLink = "https://github.com/kqwq/mitcoin-bot-2";
+
 export const developmentGuildId = "946842752807751700";
 export const ownerUserId = "596474684980330526";
 export const botPrefix = "m/";
@@ -21,14 +23,6 @@ export const COLORS: Record<string, ColorResolvable> = {
   graph: "#FF9900",
 };
 
-export const mitcoinSpreadsheet = {
-  spreadsheetId: "1VQCkG6LHVBHkj35p0BJQVEKYhB6s5QyCd4CTiD_7QoI",
-  sheets: [
-    {
-      name: "People",
-    },
-    {
-      name: "Transactions",
-    },
-  ],
-};
+export const googleSpreadsheetId =
+  "1VQCkG6LHVBHkj35p0BJQVEKYhB6s5QyCd4CTiD_7QoI";
+export const googleSheetsViewLink = `https://docs.google.com/spreadsheets/d/${googleSpreadsheetId}/edit?usp=sharing`;
