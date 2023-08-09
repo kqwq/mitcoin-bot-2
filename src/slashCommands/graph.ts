@@ -29,8 +29,9 @@ export default {
     const currentTick = db.getMitcoinTick();
 
     // Points array of last "ticks" points of [date, price]
-    const priceHistory = db.getMitcoinPriceHistory();
+    const priceHistory = [...db.getMitcoinPriceHistory()];
     ticks = Math.min(ticks, priceHistory.length);
+    priceHistory.splice(0, priceHistory.length - ticks);
     const xValues = priceHistory.map((record) => record.tick - currentTick);
     const yValues = priceHistory.map((record) => record.price);
 
@@ -79,9 +80,9 @@ export default {
       .setColor(COLORS.primary)
       .setTitle("Mitcoin Price History")
       .setDescription(
-        `Here is the price history for the last ${ticks} fluctuation${
+        `Mitcoin value over the past ${ticks} fluctuation${
           ticks > 1 ? "s" : ""
-        } (${ticksToFormattedString(ticks)}):`
+        } (${ticksToFormattedString(ticks)})`
       )
       .setImage("attachment://graph.png")
       .setTimestamp();
