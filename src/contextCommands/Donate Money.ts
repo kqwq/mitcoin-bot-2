@@ -14,8 +14,9 @@ export default {
     const targetMessage = interaction.targetMessage;
     const targetUser = targetMessage.author;
 
-    await interaction.reply({
-      content: `You are donating money to ${targetUser.username}#${targetUser.discriminator}`,
-    });
+    interaction.reply("Not yet implemented");
+    // await interaction.reply({
+    //   content: `You are donating money to ${targetUser.username}#${targetUser.discriminator}`,
+    // });
   },
 };

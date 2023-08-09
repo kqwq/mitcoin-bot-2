@@ -19,7 +19,7 @@ export default {
     const targetUser = targetMessage.author;
 
     const modal = new ModalBuilder()
-      .setCustomId("publish-modal")
+      .setCustomId("pay-taxes-modal")
       .setTitle(`Make ${targetUser.displayName} pay taxes?`);
 
     const reasonInput = new TextInputBuilder()

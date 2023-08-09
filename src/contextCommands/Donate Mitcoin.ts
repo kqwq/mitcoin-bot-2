@@ -18,5 +18,7 @@ export default {
     const targetUser = await db.getUserAndCreateNewIfNeeded(
       interaction.targetMessage.author
     );
+
+    interaction.reply("Not yet implemented");
   },
 };
