@@ -7,7 +7,9 @@ import { ownerUserId } from "../util/constants";
 export default {
   data: new SlashCommandBuilder()
     .setName("reload")
-    .setDescription("See the Mitcoin logo")
+    .setDescription(
+      "Reload a command (doesn't work because TypeScript problems)"
+    )
     // Command
     .addStringOption((option) =>
       option

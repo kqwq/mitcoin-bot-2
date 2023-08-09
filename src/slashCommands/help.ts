@@ -39,7 +39,7 @@ export default {
       interaction.options.getString("type") === "slash";
     const desc = showSlashCommands
       ? "List of commands"
-      : "List of context commands.\nRight click or long press a message and select the context command under Apps.";
+      : "List of context commands.\nRight click or long press a message and select the context command under Apps.\nNone of these commands are implemented yet.";
     const embed = new EmbedBuilder()
       .setDescription(desc)
       .setColor(COLORS.primary);

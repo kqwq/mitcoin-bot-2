@@ -9,8 +9,8 @@ export const developmentGuildId = "946842752807751700";
 export const ownerUserId = "596474684980330526";
 export const botPrefix = "m/";
 export const blockchain = {
-  guildId: "946842752807751700",
-  channelId: "1138462464497954836",
+  guildId: "424284908991676418",
+  channelId: "481797287064895489",
 };
 export const mitcoin = {
   maxHistory: 1000, // 1000
