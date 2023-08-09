@@ -1,7 +1,6 @@
 import { mitcoin } from "./constants";
 
-export function ticksToFormattedString(ticks: number) {
-  const millis = mitcoin.fluctuationTime * ticks;
+export function millisToFormattedString(millis: number) {
   const minutes = millis / 1000 / 60;
   const hours = minutes / 60;
   const days = hours / 24;
@@ -21,7 +20,16 @@ export function ticksToFormattedString(ticks: number) {
   if (minutes >= 1) {
     const minutesInt = Math.floor(minutes % 60);
     timeStr += `${minutesInt} minute${minutesInt > 1 ? "s" : ""}, `;
+  } else {
+    timeStr += `${Math.floor(millis / 1000)} second${
+      millis > 1000 ? "s" : ""
+    }, `;
   }
   timeStr = timeStr.trim().replace(/,$/, "");
   return timeStr;
+}
+
+export function ticksToFormattedString(ticks: number) {
+  const millis = mitcoin.fluctuationTime * ticks;
+  return millisToFormattedString(millis);
 }
