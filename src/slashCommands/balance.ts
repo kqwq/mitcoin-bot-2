@@ -32,7 +32,7 @@ export default {
 
     // Embed
     const embed = new EmbedBuilder()
-      .setColor(COLORS.primary)
+      .setColor(dbUser.favoriteColor || COLORS.primary)
       .setAuthor({
         name: discordUser.username,
         iconURL: discordUser.displayAvatarURL(),

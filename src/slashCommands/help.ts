@@ -34,6 +34,9 @@ export default {
     slashCommands: any[],
     contextCommands: any[]
   ) {
+    // Get user for favorite color
+    const dbUser = await db.getUser(interaction.user.id);
+
     const showSlashCommands =
       !interaction.options.getString("type") ||
       interaction.options.getString("type") === "slash";
@@ -42,7 +45,7 @@ export default {
       : "List of context commands.\nRight click or long press a message and select the context command under Apps.\nNone of these commands are implemented yet.";
     const embed = new EmbedBuilder()
       .setDescription(desc)
-      .setColor(COLORS.primary);
+      .setColor(dbUser?.favoriteColor || COLORS.primary);
 
     // Get data.name and data.description of every command
     const commandsToShow = showSlashCommands ? slashCommands : contextCommands;

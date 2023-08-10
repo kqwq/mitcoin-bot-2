@@ -1,10 +1,11 @@
+import { ColorResolvable } from "discord.js";
+
 export interface MitcoinUser {
+  peopleSheetRowNumber: number;
   id: string;
   username: string;
   mitcoin: number;
   money: number;
   dateJoined: Date;
-  lastCommand: Date | null;
-  lastTaxed: Date | null;
-  lastDonated: Date | null;
+  favoriteColor: ColorResolvable | null;
 }

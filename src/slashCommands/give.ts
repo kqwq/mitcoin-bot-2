@@ -83,7 +83,7 @@ export default {
 
     // Send embed to blockchain
     const embed = new EmbedBuilder()
-      .setColor(COLORS.primary)
+      .setColor(dbGiver.favoriteColor || COLORS.primary)
       .setAuthor({
         name: interaction.user.username,
         iconURL: interaction.user.displayAvatarURL(),

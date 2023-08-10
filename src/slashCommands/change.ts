@@ -26,6 +26,9 @@ export default {
     interaction: ChatInputCommandInteraction,
     db: DatabaseConnector
   ) {
+    // Get user for favorite color
+    const dbUser = await db.getUser(interaction.user.id);
+
     // Time
     const ticks = interaction.options.getInteger("fluctuations") ?? 100;
     const timeStr = ticksToFormattedString(ticks);
@@ -46,7 +49,7 @@ export default {
 
     // Embed
     const embed = new EmbedBuilder()
-      .setColor(COLORS.primary)
+      .setColor(dbUser?.favoriteColor || COLORS.primary)
       .setTitle(`Mitcoin change over the past ${timeStr}`)
       .addFields({
         name: `${ticks} fluctuation${ticks > 1 ? "s" : ""}`,

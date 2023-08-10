@@ -49,6 +49,9 @@ export default {
     interaction: ChatInputCommandInteraction,
     db: DatabaseConnector
   ) {
+    // Get user for favorite color
+    const dbUser = await db.getUser(interaction.user.id);
+
     // Input vars
     const currency =
       (interaction.options.getString("currency") as Currency) ?? "mitcoin";
@@ -69,7 +72,7 @@ export default {
 
     // Create embed
     const embed = new EmbedBuilder()
-      .setColor(COLORS.primary)
+      .setColor(dbUser?.favoriteColor || COLORS.primary)
       .setDescription(lbTitles[currency])
       .setThumbnail(interaction.client.user?.displayAvatarURL() ?? "")
       .setTimestamp();
