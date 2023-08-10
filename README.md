@@ -34,7 +34,7 @@ GOOGLE_SHEETS_CLIENT_EMAIL =
 6. Create a new Google Sheet, click the Share button, and share it with the service account email (as an editor)
 7. On the spreadsheet, create a sheet called `People` and add the following headers:
 ```pre
-ID,User,Money,Micoin,blank,Date joined,Last command,Last taxed,Last donated
+ID,User,Money,Micoin,blank,Date joined,Favorite color
 ```
 8. Create a second sheet called `Mitcoin Price` and add the following headers:
 ```pre
