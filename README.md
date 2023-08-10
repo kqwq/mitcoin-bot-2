@@ -1,10 +1,21 @@
 # Mitcoin Bot 2
 
-This is based on the [Mitcoin bot](https://github.com/PotatOS03/Mitcoin/tree/master) by PotatOS03.
+A Discord bot that that simulates a cyptocurrency. This is based on [Mitcoin Bot](https://github.com/PotatOS03/Mitcoin/tree/master) by PotatOS03.
+
+Features:
+- A cryptocurrency simulation with taxes, demand-driven price fluctuations, and a leaderboard
+- Discord bot interface complete with both [slash commands](https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ) and text-based commands
+- A blockchain channel that records all invest/sell/give transactions
+- A publicly-accessible Google Sheets "Database" that stores user data and the last 1000 (customizable) price fluctuations
+
+Code
+- Written in TypeScript with Type-checking
+- Customizable config [here](./src/util/constants.ts) and [here](./src/util/priceFluctuate.ts)
 
 # Commands
 `balance/bal <?user>` - Check your balance in Mitcoin\
 `change <?fluctuations>` - View how much Mitcoin's value has changed over time\
+`color <hex>` - Change the display color for your embeds, transactions, and line graphs\
 `complain` - Send a formal complaint to the Mitcoin executives\
 `give <user> <amount>` - Give a user an amount of Mitcoin\
 `graph <?fluctuations>` - Display a graph of recent Mitcoin values\
@@ -23,7 +34,7 @@ This is based on the [Mitcoin bot](https://github.com/PotatOS03/Mitcoin/tree/mas
 1. Clone the repository to your computer
 2. Create a .env file in the root directory of the repository
 
-## Google Sheets Backend Setup
+## Google Sheets Database Setup
 3. Create a service account for Google Sheets API. For more information, see [this](https://developers.google.com/workspace/guides/create-credentials#create_a_service_account) or do some Googling.
 4. Create a key for the service account and download the JSON file
 5. Open the JSON file and use it to fill out the following environment variables:
@@ -69,3 +80,6 @@ NEW_SERVER_INVITE = Dsicord invite code to Kyle's Web Experiments
 ```
 18. Run `yarn install && yarn reg && yarn start` to register slash commands (both globally and in `developmentGuildId`) and start the bot.\
 For any subsequent runs, just run `yarn start`
+
+# Contact
+- @kqwq on Discord
