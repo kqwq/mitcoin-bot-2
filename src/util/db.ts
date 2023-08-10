@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, User } from "discord.js";
+import { User } from "discord.js";
 import { mitcoin } from "./constants";
 import { getGoogleSheet, overrideGoogleSheet } from "./googleSheets";
 import { MitcoinUser } from "./types";
@@ -14,7 +14,6 @@ type MitcoinPriceHistory = {
 };
 export class DatabaseConnector {
   users: MitcoinUser[];
-  numberOfUserRows: number;
   mitcoinPrice: number;
   mitcoinTick: number;
   mitcoinDemand: number;
@@ -23,7 +22,6 @@ export class DatabaseConnector {
   mitcoinPriceIsCurrentlyUpdating: boolean;
   constructor() {
     this.users = [];
-    this.numberOfUserRows = 0;
     this.mitcoinPrice = 1;
     this.mitcoinTick = 0;
     this.mitcoinDemand = 0;
@@ -38,20 +36,19 @@ export class DatabaseConnector {
     // Users
     json = await getGoogleSheet("People");
     rows = json.slice(1);
+    let rowNumber = 2;
     for (let row of rows) {
       this.users.push({
+        peopleSheetRowNumber: rowNumber++, // Return rowNumber and increment 1
         id: row[0],
         username: row[1],
         money: parseFloat(row[2]),
         mitcoin: parseFloat(row[3]),
         // gap in spreadsheet
         dateJoined: new Date(row[5]),
-        lastCommand: row[6] ? new Date(row[6]) : null,
-        lastTaxed: row[7] ? new Date(row[7]) : null,
-        lastDonated: row[8] ? new Date(row[8]) : null,
+        favoriteColor: row[6] ? row[6] : null,
       });
     }
-    this.numberOfUserRows = json.length;
 
     // Mitcoin price (data gets added in a circular buffer)
     json = await getGoogleSheet("Mitcoin Price");
@@ -115,22 +112,25 @@ export class DatabaseConnector {
     return this.getUser(id) as MitcoinUser;
   }
 
-  async updateUser(user: MitcoinUser) {
-    const index = this.users.findIndex((u) => u.id === user.id);
-    this.users[index] = user;
-    // Update db
-    const range = `A${index + 2}:I${index + 2}`;
+  async updateUser(userIn: MitcoinUser) {
+    // Update user in this.users
+    const user = this.users.find((user) => user.id === userIn.id);
+    if (!user) throw new Error("User not found");
+    const index = this.users.indexOf(user);
+    this.users[index] = userIn;
+
+    // Update db based on userIn.peopleSheetRowNumber
+    const updateRow = userIn.peopleSheetRowNumber;
+    const range = `A${updateRow}:I${updateRow}`;
     const data = [
       [
-        user.id,
-        user.username,
-        user.money.toString(),
-        user.mitcoin.toString(),
+        userIn.id,
+        userIn.username,
+        userIn.money.toString(),
+        userIn.mitcoin.toString(),
         "",
-        user.dateJoined.toISOString(),
-        user.lastCommand?.toISOString() ?? "",
-        user.lastTaxed?.toISOString() ?? "",
-        user.lastDonated?.toISOString() ?? "",
+        userIn.dateJoined.toISOString(),
+        userIn.favoriteColor?.toString() || "",
       ],
     ];
     await overrideGoogleSheet("People", range, data);
@@ -138,18 +138,19 @@ export class DatabaseConnector {
 
   async addNewUser(id: string, username: string) {
     const user: MitcoinUser = {
+      peopleSheetRowNumber: this.users.length + 2, // plus 2 because the first row is the header
+      // For example, if there are 5 users, then rows 2-6 are the existing users,
+      // and row 7 is the new user
       id,
       username,
       money: 1,
       mitcoin: 0,
       dateJoined: new Date(),
-      lastCommand: null,
-      lastTaxed: null,
-      lastDonated: null,
+      favoriteColor: null,
     };
     this.users.push(user);
     // Add to db
-    const insertRow = this.numberOfUserRows + 1;
+    const insertRow = user.peopleSheetRowNumber;
     const range = `A${insertRow}:I${insertRow}`;
     const data = [
       [id, username, "1", "0", "", new Date().toISOString(), "", "", ""],
