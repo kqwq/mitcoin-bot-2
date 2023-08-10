@@ -9,6 +9,19 @@ import { DatabaseConnector } from "../util/db";
 import ChartJsImage from "chartjs-to-image";
 import { ticksToFormattedString } from "../util/dateAndTime";
 
+function squeezeTo250Points(points: any[]) {
+  // If there are more than 250 points, squeeze them down to 250
+  if (points.length > 250) {
+    const squeezedPoints = [];
+    const squeezeFactor = points.length / 249.5;
+    for (let i = 0; i < points.length; i += squeezeFactor) {
+      squeezedPoints.push(points[Math.floor(i)]);
+    }
+    return squeezedPoints;
+  }
+  return points;
+}
+
 export default {
   data: new SlashCommandBuilder()
     .setName("graph")
@@ -25,6 +38,7 @@ export default {
     interaction: ChatInputCommandInteraction,
     db: DatabaseConnector
   ) {
+    const dbUser = await db.getUser(interaction.user.id);
     let ticks = interaction.options.getInteger("fluctuations") ?? 100;
     const currentTick = db.getMitcoinTick();
 
@@ -44,12 +58,12 @@ export default {
     chart.setConfig({
       type: "line",
       data: {
-        labels: xValues,
+        labels: squeezeTo250Points(xValues),
         datasets: [
           {
             label: "Value",
-            data: yValues,
-            borderColor: COLORS.graph,
+            data: squeezeTo250Points(yValues),
+            borderColor: dbUser?.favoriteColor || COLORS.primary,
             pointRadius: 0,
             lineTension: 0,
             fill: false,
@@ -102,7 +116,7 @@ export default {
 
     // Send the embed
     const embed = new EmbedBuilder()
-      .setColor(COLORS.primary)
+      .setColor(dbUser?.favoriteColor || COLORS.primary)
       .setDescription(
         `Mitcoin value over the past ${ticks} fluctuation${
           ticks > 1 ? "s" : ""
