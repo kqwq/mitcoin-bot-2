@@ -13,7 +13,9 @@ export default {
     .addStringOption((option) =>
       option
         .setName("color")
-        .setDescription("A hex color code works best")
+        .setDescription(
+          "Either a #XXXXXX hex color code. Enter 'none' to reset to the default orange theme."
+        )
         .setRequired(true)
     ),
 
